@@ -1,0 +1,30 @@
+- name: Set hostname
+  hostname:
+    name: "{{ inventory_hostname }}"
+
+- name: Resolving static hostnames
+  template:
+    src: hosts_template
+    dest: /etc/hosts
+
+- name: Switch to static IP address for eth0
+  template:
+    src: ifcfg-eth0_template
+    dest: /etc/sysconfig/network-scripts/ifcfg-eth0
+
+- name: Switch to static IP address for eth1
+  template:
+    src: ifcfg-eth1_template
+    dest: /etc/sysconfig/network-scripts/ifcfg-eth1
+
+- name: Enable k8s yum repo
+  yum_repository:
+    name: k8s
+    description: Local k8s base software
+    baseurl: file:///resources/k8srpm
+    gpgcheck: no
+
+- name: Install ansible supporting packages
+  yum:
+    name: ['python-docker-py','python-passlib','py-bcrypt','python2-cryptography','ipvsadm']
+    state: present

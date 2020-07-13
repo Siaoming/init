@@ -1,0 +1,22 @@
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+
+{% for host in groups.masters %}
+{{ hostvars[host]['ansible_ssh_host'] }} {{ hostvars[host]['inventory_hostname'] }} {{ hostvars[host]['inventory_hostname_short'] }} k8sapi.example.com
+{% endfor %}
+
+{% for host in groups.workers %}
+{{ hostvars[host]['ansible_ssh_host'] }} {{ hostvars[host]['inventory_hostname'] }} {{ hostvars[host]['inventory_hostname_short'] }}
+{% endfor %}
+
+{% for host in groups.lab %}
+{{ hostvars[host].ansible_eth1.ipv4.address }} {{ hostvars[host]['inventory_hostname_short'] }}.gluster.local
+{% endfor %}
+
+{% for host in groups.panda %}
+{{ hostvars[host]['ansible_ssh_host'] }} {{ hostvars[host]['inventory_hostname'] }} {{ hostvars[host]['inventory_hostname_short'] }}
+{% endfor %}
+
+10.10.10.31 traefik.example.com s.example.com c.example.com w.example.com cheese.example.com wordpress.example.com grafana.example.com php.example.com web.example.com
+
+10.10.10.49 web1.example.com web2.example.com kibana.example.com
